@@ -3,48 +3,31 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { FiStar, FiMapPin, FiBriefcase, FiGlobe } from 'react-icons/fi';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
+import { showSuccessToast } from '@/lib/notification';
 
 const Companions = () => {
   const [companions, setCompanions] = useState([]);
 
   useEffect(() => {
     const loadCompanions = async () => {
-      try {
-        const res = await fetch('/companions.json');
-        const data = await res.json();
+      const res = await fetch('/companions.json');
+      const data = await res.json();
 
-        if (data?.companions) {
-          const selectedIds = [2, 4, 7, 8];
-          const filtered = data.companions.filter(item =>
-            selectedIds.includes(item.id),
-          );
-          setCompanions(filtered);
-        }
-      } catch (err) {
-        console.error('Error loading companions:', err);
+      if (data?.companions) {
+        const selectedIds = [2, 4, 7, 8];
+        const filtered = data.companions.filter(item =>
+          selectedIds.includes(item.id),
+        );
+        setCompanions(filtered);
       }
     };
 
     loadCompanions();
   }, []);
 
-  const handleRequest = name => {
-    toast.success(`Companion request sent to ${name}!`, {
-      style: {
-        padding: '12px 16px',
-        color: '#0F172A',
-        background: '#FFFFFF',
-        fontSize: '14px',
-        fontWeight: '600',
-        borderRadius: '12px',
-        border: '1px solid #E2E8F0',
-      },
-      iconTheme: {
-        primary: '#0284C7',
-        secondary: '#FFFFFF',
-      },
-    });
+  const handleBooking = name => {
+    showSuccessToast(`Companion request sent to ${name}!`);
   };
 
   return (
@@ -63,7 +46,7 @@ const Companions = () => {
           </div>
           <p className="text-sm sm:text-base text-slate-500 font-medium max-w-xl leading-relaxed">
             A trained professional to accompany you or your loved ones during
-            hospital check-ins, medical tests, and prescriptions-offering
+            hospital check-ins, medical tests, and prescriptions—offering
             complete peace of mind.
           </p>
         </div>
@@ -119,7 +102,7 @@ const Companions = () => {
                 </div>
 
                 <button
-                  onClick={() => handleRequest(item.name)}
+                  onClick={() => handleBooking(item.name)}
                   className="w-full h-9 rounded-xl bg-[#0284C7] text-white font-bold text-xs transition-all hover:bg-[#0284C7]/90 active:scale-[0.98] shadow-sm"
                 >
                   Request Companion
