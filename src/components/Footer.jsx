@@ -8,37 +8,37 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full border-t border-[#2DD4BF]/10 bg-[#0A0F1E] py-12 mt-auto">
+    <footer className="w-full border-t border-slate-200/60 bg-[#F8FAFC] py-10 mt-auto select-none">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex flex-col items-center md:items-start gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex flex-col items-center md:items-center gap-3">
             <Logo />
-            <div className="flex items-center gap-3 text-[#E2E8F0]/40 ml-5">
-              <span className="hover:text-[#2DD4BF] transition-colors duration-200 cursor-pointer">
+            <div className="flex items-center gap-5 text-slate-400 pl-1">
+              <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
                 <FaFacebook size={18} />
               </span>
-              <span className="hover:text-[#2DD4BF] transition-colors duration-200 cursor-pointer">
+              <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
                 <FaXTwitter size={18} />
               </span>
-              <span className="hover:text-[#2DD4BF] transition-colors duration-200 cursor-pointer">
-                <FaYoutube size={18} />
+              <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
+                <FaYoutube size={19} />
               </span>
             </div>
           </div>
 
-          <div className="flex flex-col items-center md:items-end gap-2">
-            <div className="flex items-center gap-6 text-sm font-semibold text-[#E2E8F0]/70">
-              <span className="hover:text-[#2DD4BF] transition-colors duration-200 cursor-pointer">
+          <div className="flex flex-col items-center md:items-end gap-2.5">
+            <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-600">
+              <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
                 Privacy Policy
               </span>
-              <span className="hover:text-[#2DD4BF] transition-colors duration-200 cursor-pointer">
+              <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
                 Terms of Service
               </span>
-              <span className="hover:text-[#2DD4BF] transition-colors duration-200 cursor-pointer">
+              <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
                 Contact Support
               </span>
             </div>
-            <p className="text-sm text-[#E2E8F0]/40 font-medium mt-1">
+            <p className="text-xs sm:text-sm text-slate-400/80 font-medium">
               &copy; {currentYear} Healync. All rights reserved.
             </p>
           </div>
