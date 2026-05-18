@@ -46,7 +46,7 @@ const Companions = () => {
           </div>
           <p className="text-sm sm:text-base text-slate-500 font-medium max-w-xl leading-relaxed">
             A trained professional to accompany you or your loved ones during
-            hospital check-ins, medical tests, and prescriptions—offering
+            hospital check-ins, medical tests, and prescriptions-offering
             complete peace of mind.
           </p>
         </div>
