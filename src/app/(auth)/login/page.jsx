@@ -27,6 +27,12 @@ const LoginPage = () => {
     router.push('/');
   };
 
+  const handleGoogleSignin = async () => {
+    const data = await signIn.social({
+      provider: 'google',
+    });
+  };
+
   return (
     <main className="w-full min-h-[85vh] bg-[#F8FAFC] flex items-center justify-center px-4 select-none py-12">
       <Toaster position="top-center" reverseOrder={false} />
@@ -93,6 +99,7 @@ const LoginPage = () => {
         </div>
 
         <button
+          onClick={handleGoogleSignin}
           type="button"
           className="w-full h-11 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-sm flex items-center justify-center gap-2.5 hover:bg-slate-50 transition-all shadow-sm active:scale-[0.98]"
         >

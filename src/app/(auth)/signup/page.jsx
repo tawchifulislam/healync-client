@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { FcGoogle } from 'react-icons/fc';
 import { FiUser, FiMail, FiImage, FiLock } from 'react-icons/fi';
 import toast, { Toaster } from 'react-hot-toast';
-import { signUp } from '@/lib/auth-client';
+import { signIn, signUp } from '@/lib/auth-client';
 
 export default function Register() {
   const router = useRouter();
@@ -25,6 +25,12 @@ export default function Register() {
       return;
     }
     router.push('/login');
+  };
+
+  const handleGoogleSignin = async () => {
+    const data = await signIn.social({
+      provider: 'google',
+    });
   };
 
   return (
@@ -124,6 +130,7 @@ export default function Register() {
         </div>
 
         <button
+          onClick={handleGoogleSignin}
           type="button"
           className="w-full h-11 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-sm flex items-center justify-center gap-2.5 hover:bg-slate-50 transition-all shadow-sm active:scale-[0.98]"
         >
