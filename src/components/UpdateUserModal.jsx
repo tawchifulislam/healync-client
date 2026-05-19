@@ -2,7 +2,7 @@
 
 import { authClient } from '@/lib/auth-client';
 import { FiUser, FiImage, FiEdit2 } from 'react-icons/fi';
-import toast from 'react-hot-toast';
+import { showSuccessToast } from '@/lib/notification';
 
 export function UpdateUserModal() {
   const { data: session } = authClient.useSession();
@@ -18,7 +18,7 @@ export function UpdateUserModal() {
       image,
     });
 
-    toast.success('Profile updated successfully!');
+    showSuccessToast('Profile updated successfully!');
     document.getElementById('update_modal').close();
   };
 

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { authClient } from '@/lib/auth-client';
 import { FiUser, FiPhone, FiCalendar, FiClock } from 'react-icons/fi';
-import toast from 'react-hot-toast';
+import { showSuccessToast } from '@/lib/notification';
 
 export default function BookingModal({ doctorName }) {
   const { data: session } = authClient.useSession();
@@ -45,7 +45,7 @@ export default function BookingModal({ doctorName }) {
     };
 
     await handleBooking();
-    toast.success('Appointment booked successfully!');
+    showSuccessToast('Appointment booked successfully!');
     document.getElementById('booking_modal').close();
   };
 

@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import { authClient } from '@/lib/auth-client';
 import { FiCalendar, FiClock, FiUser, FiPhone } from 'react-icons/fi';
-import toast from 'react-hot-toast';
 
 import { DeleteAppointment } from '@/components/DeleteAppointment';
 import UpdateBookingModal from '@/components/UpdateBookingModal';
+import { showSuccessToast } from '@/lib/notification';
 
 export default function MyBookingPage() {
   const { data: session } = authClient.useSession();
@@ -88,14 +88,14 @@ export default function MyBookingPage() {
                 <UpdateBookingModal
                   booking={booking}
                   onUpdateSuccess={() => {
-                    toast.success('Appointment updated successfully!');
+                    showSuccessToast('Appointment updated successfully!');
                     setReload(prev => !prev);
                   }}
                 />
                 <DeleteAppointment
                   booking={booking}
                   onDeleteSuccess={() => {
-                    toast.success('Appointment deleted successfully!');
+                    showSuccessToast('Appointment deleted successfully!');
                     setReload(prev => !prev);
                   }}
                 />

@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 
 export const showSuccessToast = message => {
-  toast.success(message, {
+  showSuccessToast(message, {
     style: {
       padding: '12px 16px',
       color: '#0F172A',
