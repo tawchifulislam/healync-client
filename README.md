@@ -45,7 +45,3 @@ Open [http://localhost:3000](http://localhost:3000) to view the app locally.
 - [Vercel](https://vercel.com) - Deployment
 
 ---
-
-## Author
-
-**Tawchiful Islam** - [@tawchifulislam](https://github.com/tawchifulislam)
