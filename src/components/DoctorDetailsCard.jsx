@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import {
   FiClock,
@@ -11,8 +12,11 @@ import {
 } from 'react-icons/fi';
 import { Toaster } from 'react-hot-toast';
 import { showSuccessToast } from '@/lib/notification';
+import BookingModal from './BookingModal';
 
 const DoctorDetailsCard = ({ doctor }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const {
     name,
     specialty,
@@ -25,8 +29,10 @@ const DoctorDetailsCard = ({ doctor }) => {
     fee,
   } = doctor;
 
-  const handleBooking = () => {
+  const handleBookingSubmit = async e => {
+    e.preventDefault();
     showSuccessToast('Appointment booked successfully!');
+    setIsModalOpen(false);
   };
 
   return (
@@ -124,14 +130,23 @@ const DoctorDetailsCard = ({ doctor }) => {
             </div>
 
             <button
-              onClick={handleBooking}
-              className="h-11 px-8 rounded-xl bg-[#0284C7] text-white font-bold text-sm transition-all hover:bg-[#0284C7]/90 shadow-sm active:scale-[0.98]"
+              onClick={() =>
+                document.getElementById('booking_modal').showModal()
+              }
+              className="h-11 px-8 rounded-xl bg-[#0284C7] text-white font-bold text-sm transition-all hover:bg-[#0284C7]/90 shadow-sm active:scale-[0.98] cursor-pointer"
             >
               Book Appointment
             </button>
           </div>
         </div>
       </div>
+
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleBookingSubmit}
+        doctorName={name}
+      />
     </div>
   );
 };
