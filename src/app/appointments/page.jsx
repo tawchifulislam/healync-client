@@ -2,6 +2,11 @@ import DoctorCard from '@/components/DoctorCard';
 import SearchBar from '@/components/SearchBar';
 import { fetchDoctors } from '@/lib/doctors/data';
 
+export const metadata = {
+  title: 'All Appointments',
+  description: 'Find and book top-rated specialists.',
+};
+
 const AppointmentsPage = async props => {
   const searchParams = await props.searchParams;
   const searchTerm = searchParams?.searchTerm || '';

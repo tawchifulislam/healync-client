@@ -2,6 +2,11 @@ import DoctorDetailsCard from '@/components/DoctorDetailsCard';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 
+export const metadata = {
+  title: 'Doctor Profile',
+  description: 'View doctor profile and schedule your appointment.',
+};
+
 export default async function DoctorDetails({ params }) {
   const { id } = await params;
 

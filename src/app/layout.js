@@ -12,7 +12,7 @@ const inter = Inter({
 
 export const metadata = {
   title: ' Doctor Appointment Manager',
-  description: 'Book doctors seamlessly.',
+  description: 'Best doctor appointment web in Bangladesh',
 };
 
 export default function RootLayout({ children }) {
