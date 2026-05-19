@@ -2,10 +2,11 @@
 
 import { authClient } from '@/lib/auth-client';
 import { FiUser, FiImage, FiEdit2 } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 
 export function UpdateUserModal() {
-  const userData = authClient.useSession();
-  const user = userData.data?.user;
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -17,7 +18,7 @@ export function UpdateUserModal() {
       image,
     });
 
-    await userData.revalidate();
+    toast.success('Profile updated successfully!');
     document.getElementById('update_modal').close();
   };
 

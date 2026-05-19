@@ -1,23 +1,36 @@
-import { headers } from 'next/headers';
-import { auth } from '@/lib/auth';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { authClient } from '@/lib/auth-client';
 import { FiCalendar, FiClock, FiUser, FiPhone } from 'react-icons/fi';
+import toast from 'react-hot-toast';
 
-const MyBookingPage = async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+import { DeleteAppointment } from '@/components/DeleteAppointment';
+import UpdateBookingModal from '@/components/UpdateBookingModal';
 
+export default function MyBookingPage() {
+  const { data: session } = authClient.useSession();
   const user = session?.user;
   const userEmail = user?.email || '';
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/booking/${userEmail}`,
-    {
-      cache: 'no-store',
-    },
-  );
+  const [bookings, setBookings] = useState([]);
+  const [reload, setReload] = useState(false);
 
-  const bookings = await res.json();
+  useEffect(() => {
+    const fetchBookings = async () => {
+      if (!userEmail) return;
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/booking/${userEmail}`,
+        {
+          cache: 'no-store',
+        },
+      );
+      const data = await res.json();
+      setBookings(data);
+    };
+
+    fetchBookings();
+  }, [userEmail, reload]);
 
   return (
     <div className="w-full select-none py-2 animate-fadeIn">
@@ -60,12 +73,27 @@ const MyBookingPage = async () => {
                   <span>{booking.appointmentTime}</span>
                 </div>
               </div>
+
+              <div className="flex items-center gap-2.5 mt-2 sm:mt-1">
+                <UpdateBookingModal
+                  booking={booking}
+                  onUpdateSuccess={() => {
+                    toast.success('Appointment updated successfully!');
+                    setReload(prev => !prev);
+                  }}
+                />
+                <DeleteAppointment
+                  booking={booking}
+                  onDeleteSuccess={() => {
+                    toast.success('Appointment deleted successfully!');
+                    setReload(prev => !prev);
+                  }}
+                />
+              </div>
             </div>
           </div>
         ))}
       </div>
     </div>
   );
-};
-
-export default MyBookingPage;
+}

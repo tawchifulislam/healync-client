@@ -175,7 +175,7 @@ export default function BookingModal({ doctorName }) {
             type="submit"
             className="h-10 px-6 rounded-xl bg-[#0284C7] text-white font-bold text-xs hover:bg-[#0284C7]/90 active:scale-[0.98] transition-all shadow-sm cursor-pointer"
           >
-            Confirm
+            Submit
           </button>
         </div>
       </form>
