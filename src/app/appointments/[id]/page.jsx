@@ -1,13 +1,27 @@
 import DoctorDetailsCard from '@/components/DoctorDetailsCard';
-
-const fetchDoctor = async id => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/doctors/${id}`);
-  const data = await res.json();
-  return data || {};
-};
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
 export default async function DoctorDetails({ params }) {
   const { id } = await params;
+
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+
+  const fetchDoctor = async doctorsId => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/doctors/${doctorsId}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    const data = await res.json();
+    return data || {};
+  };
+
   const doctor = await fetchDoctor(id);
 
   return (

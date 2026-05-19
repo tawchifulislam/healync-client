@@ -30,10 +30,14 @@ export default function BookingModal({ doctorName }) {
         appointmentTime,
       };
 
+      const { data: tokenData } = await authClient.token();
+      const token = tokenData?.token;
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(bookingData),
       });

@@ -2,17 +2,22 @@
 
 import { useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
+import { authClient } from '@/lib/auth-client';
 
 export function DeleteAppointment({ booking, onDeleteSuccess }) {
   const { _id, doctorName } = booking;
 
   const handleDelete = async () => {
+    const { data: tokenData } = await authClient.token();
+    const token = tokenData?.token;
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/booking/${_id}`,
       {
         method: 'DELETE',
         headers: {
           'content-type': 'application/json',
+          authorization: `Bearer ${token}`,
         },
       },
     );

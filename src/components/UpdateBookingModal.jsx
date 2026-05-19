@@ -9,6 +9,8 @@ import {
   TextField,
 } from '@heroui/react';
 import { FiEdit2, FiUser, FiClock, FiPhone } from 'react-icons/fi';
+import { authClient } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
 
 export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
   const { _id, patientName, appointmentTime, phone } = booking || {};
@@ -18,12 +20,16 @@ export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
     const formData = new FormData(e.currentTarget);
     const updatedData = Object.fromEntries(formData.entries());
 
+    const { data: tokenData } = await authClient.token();
+    const token = tokenData?.token;
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/booking/${_id}`,
       {
         method: 'PATCH',
         headers: {
           'content-type': 'application/json',
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(updatedData),
       },
@@ -148,7 +154,7 @@ export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
                     slot="close"
                     className="h-10 px-6 rounded-xl bg-[#0284C7] text-white font-bold text-xs hover:bg-[#0284C7]/90 active:scale-[0.98] transition-all shadow-sm cursor-pointer"
                   >
-                    Save Changes
+                    Save
                   </Button>
                 </Modal.Footer>
               </form>

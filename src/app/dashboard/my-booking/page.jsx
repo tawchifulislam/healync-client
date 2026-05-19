@@ -19,14 +19,24 @@ export default function MyBookingPage() {
   useEffect(() => {
     const fetchBookings = async () => {
       if (!userEmail) return;
+
+      const { data: tokenData } = await authClient.token();
+      const token = tokenData?.token;
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/booking/${userEmail}`,
         {
           cache: 'no-store',
+          headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${token}`,
+          },
         },
       );
       const data = await res.json();
-      setBookings(data);
+      if (Array.isArray(data)) {
+        setBookings(data);
+      }
     };
 
     fetchBookings();
