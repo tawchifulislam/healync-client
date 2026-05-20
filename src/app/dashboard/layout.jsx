@@ -7,9 +7,11 @@ import { FiUser, FiCalendar } from 'react-icons/fi';
 
 export default function DashboardLayout({ children }) {
   const pathname = usePathname();
+  const isWide = pathname === '/dashboard/my-booking';
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-[#F8FAFC] px-4 sm:px-6 lg:px-8 select-none py-12">
+      <Toaster />
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         <header className="mb-10 text-center">
           <h1 className="text-3xl font-black text-[#0F172A] tracking-tight">
@@ -47,13 +49,11 @@ export default function DashboardLayout({ children }) {
         </div>
 
         <div
-          className="w-full max-w-sm data-[wide=true]:max-w-4xl bg-white border border-slate-200/60 rounded-2xl p-6 sm:p-8 shadow-sm min-h-70 transition-all duration-300 flex items-center justify-center"
-          data-wide={pathname === '/dashboard/my-booking'}
+          className={`w-full bg-white border border-slate-200/60 rounded-2xl p-5 sm:p-8 shadow-sm min-h-70 transition-all duration-300 flex items-center justify-center ${
+            isWide ? 'max-w-4xl' : 'max-w-sm'
+          }`}
         >
-          <div className="w-full h-full">
-            {children}
-            <Toaster />
-          </div>
+          <div className="w-full h-full">{children}</div>
         </div>
       </div>
     </div>

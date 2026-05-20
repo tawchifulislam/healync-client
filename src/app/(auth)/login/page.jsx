@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock } from 'react-icons/fi';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { signIn } from '@/lib/auth-client';
+import { showSuccessToast, showErrorToast } from '@/lib/notification';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -21,10 +22,13 @@ const LoginPage = () => {
     });
 
     if (error) {
-      toast.error('Invalid email or password');
+      showErrorToast('Invalid email or password');
       return;
     }
-    router.push('/');
+    showSuccessToast('Logged in successfully!');
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 200);
   };
 
   const handleGoogleSignin = async () => {
@@ -35,10 +39,11 @@ const LoginPage = () => {
 
   return (
     <main className="w-full min-h-[85vh] bg-[#F8FAFC] flex items-center justify-center px-4 select-none py-12">
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster />
+
       <form
         onSubmit={handleLogin}
-        className="w-full max-w-md bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-8 shadow-sm"
+        className="w-full max-w-md bg-white border border-slate-200/60 rounded-3xl p-5 sm:p-8 shadow-sm"
       >
         <div className="text-center mb-8">
           <h1 className="text-2xl font-black text-[#0F172A] tracking-tight">
@@ -63,7 +68,7 @@ const LoginPage = () => {
           </div>
 
           <div className="space-y-1.5">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-wrap justify-between items-center gap-1">
               <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                 Password
               </label>
@@ -84,7 +89,7 @@ const LoginPage = () => {
 
           <button
             type="submit"
-            className="w-full h-11 rounded-xl bg-[#0284C7] text-white font-bold text-sm flex items-center justify-center gap-2 hover:bg-[#0284C7]/90 transition-all shadow-sm active:scale-[0.98] mt-2"
+            className="w-full h-11 rounded-xl bg-[#0284C7] text-white font-bold text-sm flex items-center justify-center gap-2 hover:bg-[#0284C7]/90 transition-all shadow-sm active:scale-[0.98] mt-2 cursor-pointer"
           >
             Login
           </button>
@@ -101,7 +106,7 @@ const LoginPage = () => {
         <button
           onClick={handleGoogleSignin}
           type="button"
-          className="w-full h-11 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-sm flex items-center justify-center gap-2.5 hover:bg-slate-50 transition-all shadow-sm active:scale-[0.98]"
+          className="w-full h-11 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-sm flex items-center justify-center gap-2.5 hover:bg-slate-50 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
         >
           <FcGoogle size={20} />
           Continue with Google

@@ -33,14 +33,14 @@ const DailyHealthTips = () => {
         </div>
 
         <div className="max-w-5xl mx-auto relative px-0 sm:px-6 lg:px-8">
-          <button className="tips-prev-btn absolute left-2 lg:-left-6 top-1/2 -translate-y-1/2 z-30 flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#0284C7] hover:bg-slate-50 hover:text-[#026497] transition-all shadow-sm active:scale-95">
+          <button className="tips-prev-btn absolute left-2 lg:-left-6 top-1/2 -translate-y-1/2 z-30 hidden sm:flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#0284C7] hover:bg-slate-50 hover:text-[#026497] transition-all shadow-sm active:scale-95 cursor-pointer">
             <FiChevronLeft size={22} />
           </button>
-          <button className="tips-next-btn absolute right-2 lg:-right-6 top-1/2 -translate-y-1/2 z-30 flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#0284C7] hover:bg-slate-50 hover:text-[#026497] transition-all shadow-sm active:scale-95">
+          <button className="tips-next-btn absolute right-2 lg:-right-6 top-1/2 -translate-y-1/2 z-30 hidden sm:flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#0284C7] hover:bg-slate-50 hover:text-[#026497] transition-all shadow-sm active:scale-95 cursor-pointer">
             <FiChevronRight size={22} />
           </button>
 
-          <div className="bg-white border border-slate-200/60 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-3xl p-6 pb-16 sm:p-10 lg:p-12 shadow-sm relative">
             <Swiper
               modules={[Autoplay, Navigation]}
               autoplay={{ delay: 7000, disableOnInteraction: false }}
@@ -124,6 +124,14 @@ const DailyHealthTips = () => {
                 </div>
               </SwiperSlide>
             </Swiper>
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-4 sm:hidden">
+              <button className="tips-prev-btn flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#0284C7] shadow-sm cursor-pointer active:scale-95 transition-all">
+                <FiChevronLeft size={18} />
+              </button>
+              <button className="tips-next-btn flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#0284C7] shadow-sm cursor-pointer active:scale-95 transition-all">
+                <FiChevronRight size={18} />
+              </button>
+            </div>
           </div>
         </div>
       </div>

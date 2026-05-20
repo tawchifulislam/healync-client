@@ -6,15 +6,15 @@ const DoctorCard = ({ doctor }) => {
   const { _id, name, specialty, image, experience, hospital, fee } = doctor;
 
   return (
-    <div className="bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300 flex flex-col justify-between">
+    <div className="bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full">
       <div>
-        <div className="relative w-full aspect-16/10 bg-slate-100">
+        <div className="relative w-full aspect-16/10 bg-slate-100 overflow-hidden">
           <Image
             src={image}
             alt={name}
             fill
-            className="object-cover object-top"
-            sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 25vw"
+            className="object-cover object-top hover:scale-105 transition-transform duration-500"
+            sizes="(max-w: 768px) 100vw, (max-w: 1200px) 50vw, 25vw"
             priority
           />
           <div className="absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-white to-transparent" />
@@ -54,7 +54,7 @@ const DoctorCard = ({ doctor }) => {
         </div>
 
         <Link href={`/appointments/${_id}`}>
-          <button className="h-9 px-4 rounded-xl bg-[#0284C7] text-white font-bold text-xs flex items-center gap-1.5 transition-all hover:bg-[#0284C7]/90 shadow-sm active:scale-[0.98]">
+          <button className="h-9 px-4 rounded-xl bg-[#0284C7] text-white font-bold text-xs flex items-center gap-1.5 transition-all hover:bg-[#0284C7]/90 shadow-sm active:scale-[0.98] cursor-pointer whitespace-nowrap">
             View Details
             <FiArrowRight size={13} />
           </button>

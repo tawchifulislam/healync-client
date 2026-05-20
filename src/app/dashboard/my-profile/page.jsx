@@ -1,24 +1,26 @@
 'use client';
 
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
 import { UpdateUserModal } from '@/components/UpdateUserModal';
 
 const MyProfile = () => {
   const userData = authClient.useSession();
   const user = userData.data?.user;
+  const router = useRouter();
 
   if (userData.isPending) {
     return null;
   }
 
-  if (!user) {
-    redirect('/login');
+  if (!userData.isPending && !user) {
+    router.replace('/login');
+    return null;
   }
 
   return (
-    <div className="w-full max-w-sm mx-auto select-none py-2">
+    <div className="w-full max-w-sm mx-auto select-none py-2 px-4">
       <div className="flex flex-col items-center text-center">
         <div className="w-24 h-24 rounded-full p-1 bg-white border-2 border-slate-200 shadow-sm overflow-hidden flex items-center justify-center mb-6 shrink-0">
           <div className="relative w-full h-full rounded-full overflow-hidden bg-[#0284C7]/5 flex items-center justify-center">

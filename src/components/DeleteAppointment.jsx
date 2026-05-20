@@ -22,9 +22,11 @@ export function DeleteAppointment({ booking, onDeleteSuccess }) {
       },
     );
 
-    await res.json();
-    document.getElementById(`delete_modal_${_id}`).close();
-    onDeleteSuccess();
+    if (res.ok) {
+      await res.json();
+      document.getElementById(`delete_modal_${_id}`).close();
+      onDeleteSuccess();
+    }
   };
 
   return (
@@ -33,7 +35,7 @@ export function DeleteAppointment({ booking, onDeleteSuccess }) {
         onClick={() =>
           document.getElementById(`delete_modal_${_id}`).showModal()
         }
-        className="h-8 px-3 rounded-lg bg-rose-50/60 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-100 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+        className="h-8 px-3 rounded-lg bg-rose-50/60 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-100 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer min-w-fit shrink-0"
       >
         <FiTrash2 size={11} />
         <span>Cancel</span>
@@ -41,7 +43,7 @@ export function DeleteAppointment({ booking, onDeleteSuccess }) {
 
       <dialog
         id={`delete_modal_${_id}`}
-        className="fixed inset-0 z-50 m-auto h-fit w-full max-w-sm rounded-3xl bg-white border border-slate-200/60 shadow-2xl p-0 overflow-hidden backdrop:bg-black/40 backdrop:backdrop-blur-sm open:flex open:flex-col animate-fadeIn select-none text-left"
+        className="fixed inset-0 z-50 m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-sm rounded-3xl bg-white border border-slate-200/60 shadow-2xl p-0 overflow-y-auto backdrop:bg-black/40 backdrop:backdrop-blur-sm open:flex open:flex-col animate-fadeIn select-none text-left"
       >
         <div className="p-6 space-y-4">
           <div>
@@ -55,20 +57,20 @@ export function DeleteAppointment({ booking, onDeleteSuccess }) {
             </p>
           </div>
 
-          <div className="flex gap-2.5 justify-end border-t border-slate-100 pt-4 mt-2">
+          <div className="flex flex-wrap items-center justify-between xs:justify-end gap-2.5 border-t border-slate-100 pt-4 mt-2 w-full">
             <button
               type="button"
               onClick={() =>
                 document.getElementById(`delete_modal_${_id}`).close()
               }
-              className="h-9 px-4 rounded-xl text-slate-500 border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-xs transition-all cursor-pointer shadow-sm"
+              className="h-9 px-4 rounded-xl text-slate-500 border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-xs transition-all cursor-pointer shadow-sm flex-1 xs:flex-none"
             >
               Go Back
             </button>
             <button
               type="button"
               onClick={handleDelete}
-              className="h-9 px-5 rounded-xl bg-rose-600 text-white font-bold text-xs hover:bg-rose-700 active:scale-[0.98] transition-all shadow-sm cursor-pointer"
+              className="h-9 px-5 rounded-xl bg-rose-600 text-white font-bold text-xs hover:bg-rose-700 active:scale-[0.98] transition-all shadow-sm cursor-pointer flex-1 xs:flex-none whitespace-nowrap"
             >
               Cancel Appointment
             </button>

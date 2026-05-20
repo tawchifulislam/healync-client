@@ -103,7 +103,7 @@ const Companions = () => {
 
                 <button
                   onClick={() => handleBooking(item.name)}
-                  className="w-full h-9 rounded-xl bg-[#0284C7] text-white font-bold text-xs transition-all hover:bg-[#0284C7]/90 active:scale-[0.98] shadow-sm"
+                  className="w-full h-9 rounded-xl bg-[#0284C7] text-white font-bold text-xs transition-all hover:bg-[#0284C7]/90 active:scale-[0.98] shadow-sm cursor-pointer"
                 >
                   Request Companion
                 </button>

@@ -8,11 +8,12 @@ import {
   Modal,
   TextField,
 } from '@heroui/react';
+import { useOverlayState } from '@heroui/react';
 import { FiEdit2, FiUser, FiClock, FiPhone } from 'react-icons/fi';
 import { authClient } from '@/lib/auth-client';
-import toast from 'react-hot-toast';
 
 export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
+  const state = useOverlayState();
   const { _id, patientName, appointmentTime, phone } = booking || {};
 
   const onSubmit = async e => {
@@ -35,8 +36,11 @@ export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
       },
     );
 
-    await res.json();
-    onUpdateSuccess();
+    if (res.ok) {
+      await res.json();
+      onUpdateSuccess();
+      state.close();
+    }
   };
 
   if (!booking) return null;
@@ -44,19 +48,23 @@ export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
   return (
     <Modal>
       <Button
+        onPress={state.open}
         variant="light"
-        className="h-8 px-3 rounded-lg border border-slate-200 text-slate-600 hover:text-[#0284C7] hover:border-[#0284C7] font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer bg-white"
+        className="h-8 px-3 rounded-lg border border-slate-200 text-slate-600 hover:text-[#0284C7] hover:border-[#0284C7] font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer bg-white min-w-fit shrink-0"
       >
         <FiEdit2 size={11} />
         <span>Update</span>
       </Button>
 
-      <Modal.Backdrop className="bg-black/40 backdrop-blur-sm">
-        <Modal.Container placement="auto">
-          <Modal.Dialog className="sm:max-w-md bg-white border border-slate-200/60 rounded-3xl p-0 overflow-hidden shadow-2xl select-none text-left">
-            <Modal.CloseTrigger />
+      <Modal.Backdrop
+        isOpen={state.isOpen}
+        onOpenChange={state.setOpen}
+        className="bg-black/40 backdrop-blur-sm"
+      >
+        <Modal.Container placement="center" className="mx-4 size-sm">
+          <Modal.Dialog className="w-full sm:max-w-md bg-white border border-slate-200/60 rounded-3xl p-0 overflow-hidden shadow-2xl select-none text-left max-h-[90vh] overflow-y-auto">
             <Modal.Header className="bg-[#F8FAFC] p-6 flex items-center gap-4 border-b border-slate-100">
-              <div className="w-10 h-10 rounded-xl bg-[#0284C7]/5 flex items-center justify-center text-[#0284C7]">
+              <div className="w-10 h-10 rounded-xl bg-[#0284C7]/5 flex items-center justify-center text-[#0284C7] shrink-0">
                 <FiClock size={20} />
               </div>
               <div>
@@ -128,7 +136,7 @@ export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
                       </Label>
                       <div className="relative flex items-center">
                         <FiClock
-                          className="absolute left-4 text-slate-400"
+                          className="absolute left-4 text-slate-400 z-10"
                           size={16}
                         />
                         <Input
@@ -143,16 +151,15 @@ export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
 
                 <Modal.Footer className="flex gap-3 pt-4 justify-end border-t border-slate-100 mt-6">
                   <Button
-                    slot="close"
+                    onPress={state.close}
                     variant="light"
-                    className="h-10 px-4 rounded-xl text-slate-500 font-semibold text-xs hover:bg-slate-100 transition-all cursor-pointer"
+                    className="h-10 px-4 rounded-xl text-slate-500 font-semibold text-xs hover:bg-slate-100 transition-all cursor-pointer min-w-fit"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    slot="close"
-                    className="h-10 px-6 rounded-xl bg-[#0284C7] text-white font-bold text-xs hover:bg-[#0284C7]/90 active:scale-[0.98] transition-all shadow-sm cursor-pointer"
+                    className="h-10 px-6 rounded-xl bg-[#0284C7] text-white font-bold text-xs hover:bg-[#0284C7]/90 active:scale-[0.98] transition-all shadow-sm cursor-pointer min-w-fit"
                   >
                     Save
                   </Button>

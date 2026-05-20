@@ -21,11 +21,11 @@ const TopRatedDoctors = async () => {
           </div>
 
           <Link href="/appointments" className="group shrink-0">
-            <button className="h-10 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-all hover:bg-slate-50 shadow-sm">
+            <button className="h-10 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-all hover:bg-slate-50 shadow-sm cursor-pointer">
               View All
               <FiArrowRight
                 size={14}
-                className="text-slate-400 group-hover:text-[#0284C7] transition-colors"
+                className="text-slate-400 group-hover:text-[#0284C7] group-hover:translate-x-0.5 transition-all"
               />
             </button>
           </Link>

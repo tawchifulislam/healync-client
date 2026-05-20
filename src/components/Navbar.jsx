@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { RxHamburgerMenu, RxCross2 } from 'react-icons/rx';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -12,6 +12,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const { data: session, isPending } = useSession();
   const user = session?.user;
@@ -21,10 +22,25 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    false;
+  }, [pathname]);
 
   const handleLogOut = async () => {
     await authClient.signOut();
-    window.location.href = '/';
+    router.replace('/');
+    router.refresh();
   };
 
   return (
@@ -65,7 +81,7 @@ const Navbar = () => {
             <Link
               href="/dashboard"
               className={`text-sm font-semibold transition-colors duration-200 ${
-                pathname === '/dashboard'
+                pathname === '/dashboard' || pathname.startsWith('/dashboard/')
                   ? 'text-[#0284C7]'
                   : 'text-slate-600 hover:text-[#0284C7]'
               }`}
@@ -77,7 +93,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-4">
             {!isPending && user ? (
               <div className="flex items-center gap-3">
-                <div className="relative w-9 h-9 rounded-full overflow-hidden bg-[#0284C7]/5 border border-slate-200 flex items-center justify-center">
+                <div className="relative w-9 h-9 rounded-full overflow-hidden bg-[#0284C7]/5 border border-slate-200 flex items-center justify-center shrink-0">
                   {user?.image ? (
                     <Image
                       src={user.image}
@@ -94,7 +110,7 @@ const Navbar = () => {
                 </div>
                 <button
                   onClick={handleLogOut}
-                  className="rounded-xl border border-red-100 bg-red-50 text-red-600 font-bold text-sm px-4 py-2 transition-all hover:bg-red-600 hover:text-white shadow-sm"
+                  className="rounded-xl border border-red-100 bg-red-50 text-red-600 font-bold text-sm px-4 py-2 transition-all hover:bg-red-600 hover:text-white shadow-sm cursor-pointer"
                 >
                   Logout
                 </button>
@@ -122,7 +138,7 @@ const Navbar = () => {
           <div className="flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-slate-700 hover:text-[#0284C7] transition-colors"
+              className="p-2 text-slate-700 hover:text-[#0284C7] transition-colors cursor-pointer"
             >
               {isOpen ? <RxCross2 size={24} /> : <RxHamburgerMenu size={24} />}
             </button>
@@ -131,7 +147,7 @@ const Navbar = () => {
       </div>
 
       {isOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full px-4 pt-2 pb-6 space-y-2 bg-white border-b border-slate-200 shadow-lg">
+        <div className="md:hidden absolute top-16 left-0 w-full px-4 pt-2 pb-6 space-y-2 bg-white border-b border-slate-200 shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto animate-fadeIn">
           <Link
             href="/"
             onClick={() => setIsOpen(false)}
@@ -158,7 +174,7 @@ const Navbar = () => {
             href="/dashboard"
             onClick={() => setIsOpen(false)}
             className={`block py-2.5 px-4 text-base font-semibold rounded-xl transition-colors ${
-              pathname === '/dashboard'
+              pathname === '/dashboard' || pathname.startsWith('/dashboard/')
                 ? 'text-[#0284C7] bg-[#0284C7]/5'
                 : 'text-slate-700 hover:bg-slate-50'
             }`}
@@ -168,9 +184,9 @@ const Navbar = () => {
 
           <div className="pt-4 border-t border-slate-100 mt-4">
             {!isPending && user ? (
-              <div className="flex items-center justify-between px-4">
-                <div className="flex items-center gap-3">
-                  <div className="relative w-9 h-9 rounded-full overflow-hidden bg-[#0284C7]/5 border border-slate-200 flex items-center justify-center">
+              <div className="flex items-center justify-between px-4 gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="relative w-9 h-9 rounded-full overflow-hidden bg-[#0284C7]/5 border border-slate-200 flex items-center justify-center shrink-0">
                     {user?.image ? (
                       <Image
                         src={user.image}
@@ -185,7 +201,7 @@ const Navbar = () => {
                       </span>
                     )}
                   </div>
-                  <span className="text-sm font-bold text-slate-700 truncate max-w-30">
+                  <span className="text-sm font-bold text-slate-700 truncate">
                     {user?.name}
                   </span>
                 </div>
@@ -194,20 +210,20 @@ const Navbar = () => {
                     handleLogOut();
                     setIsOpen(false);
                   }}
-                  className="rounded-xl border border-red-100 bg-red-50 text-red-600 font-bold text-sm px-4 py-2 shadow-sm"
+                  className="rounded-xl border border-red-100 bg-red-50 text-red-600 font-bold text-sm px-4 py-2 shadow-sm cursor-pointer whitespace-nowrap shrink-0"
                 >
                   Logout
                 </button>
               </div>
             ) : !isPending ? (
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 px-2">
                 <Link href="/login" onClick={() => setIsOpen(false)}>
-                  <button className="w-full py-2.5 rounded-xl border border-slate-200 text-slate-700 text-sm font-bold transition-colors hover:bg-slate-50">
+                  <button className="w-full py-2.5 rounded-xl border border-slate-200 text-slate-700 text-sm font-bold transition-colors hover:bg-slate-50 cursor-pointer">
                     Login
                   </button>
                 </Link>
                 <Link href="/signup" onClick={() => setIsOpen(false)}>
-                  <button className="w-full py-2.5 rounded-xl bg-[#0284C7] text-white text-sm font-bold transition-colors hover:bg-[#0284C7]/90">
+                  <button className="w-full py-2.5 rounded-xl bg-[#0284C7] text-white text-sm font-bold transition-colors hover:bg-[#0284C7]/90 cursor-pointer">
                     Signup
                   </button>
                 </Link>

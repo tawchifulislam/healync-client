@@ -11,7 +11,6 @@ import {
   FiShield,
 } from 'react-icons/fi';
 import { Toaster } from 'react-hot-toast';
-import { showSuccessToast } from '@/lib/notification';
 import BookingModal from './BookingModal';
 
 const DoctorDetailsCard = ({ doctor }) => {
@@ -29,17 +28,11 @@ const DoctorDetailsCard = ({ doctor }) => {
     fee,
   } = doctor;
 
-  const handleBookingSubmit = async e => {
-    e.preventDefault();
-    showSuccessToast('Appointment booked successfully!');
-    setIsModalOpen(false);
-  };
-
   return (
-    <div className="w-full bg-white border border-slate-200/60 rounded-3xl p-6 lg:p-8 shadow-sm select-none">
-      <Toaster position="top-center" reverseOrder={false} />
+    <div className="w-full bg-white border border-slate-200/60 rounded-3xl p-5 sm:p-6 lg:p-8 shadow-sm select-none">
+      <Toaster />
 
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">
+      <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-10">
         <div className="w-full lg:w-[320px] shrink-0">
           <div className="relative w-full aspect-4/3 lg:aspect-square bg-slate-50 rounded-2xl overflow-hidden border border-slate-100">
             <Image
@@ -47,7 +40,7 @@ const DoctorDetailsCard = ({ doctor }) => {
               alt={name}
               fill
               className="object-cover object-top"
-              sizes="(max-w-1024px) 100vw, 320px"
+              sizes="(max-w: 1024px) 100vw, 320px"
               priority
             />
           </div>
@@ -55,7 +48,7 @@ const DoctorDetailsCard = ({ doctor }) => {
 
         <div className="flex-1 flex flex-col justify-between">
           <div>
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
               <span className="text-xs font-bold text-[#0284C7] bg-[#0284C7]/5 px-2.5 py-1 rounded-md">
                 {specialty}
               </span>
@@ -69,7 +62,7 @@ const DoctorDetailsCard = ({ doctor }) => {
             </h1>
 
             <div className="flex items-center gap-1.5 text-xs sm:text-sm text-slate-500 font-semibold mt-2">
-              <FiAward size={15} className="text-[#0284C7]" />
+              <FiAward size={15} className="text-[#0284C7] shrink-0" />
               <span>{experience} Professional Experience</span>
             </div>
 
@@ -83,7 +76,7 @@ const DoctorDetailsCard = ({ doctor }) => {
                   size={18}
                   className="text-slate-400 mt-0.5 shrink-0"
                 />
-                <div className="min-w-0">
+                <div className="min-w-0 w-full">
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
                     Hospital & Location
                   </p>
@@ -106,7 +99,7 @@ const DoctorDetailsCard = ({ doctor }) => {
                     {availability?.map((time, idx) => (
                       <span
                         key={idx}
-                        className="bg-[#F8FAFC] border border-slate-200/60 px-2.5 py-1 rounded-lg text-slate-600 font-semibold text-[11px] flex items-center gap-1"
+                        className="bg-[#F8FAFC] border border-slate-200/60 px-2.5 py-1 rounded-lg text-slate-600 font-semibold text-[11px] flex items-center gap-1 whitespace-nowrap"
                       >
                         <FiCalendar size={11} className="text-[#0284C7]" />
                         {time}
@@ -130,10 +123,8 @@ const DoctorDetailsCard = ({ doctor }) => {
             </div>
 
             <button
-              onClick={() =>
-                document.getElementById('booking_modal').showModal()
-              }
-              className="h-11 px-8 rounded-xl bg-[#0284C7] text-white font-bold text-sm transition-all hover:bg-[#0284C7]/90 shadow-sm active:scale-[0.98] cursor-pointer"
+              onClick={() => setIsModalOpen(true)}
+              className="h-11 px-8 rounded-xl bg-[#0284C7] text-white font-bold text-sm transition-all hover:bg-[#0284C7]/90 shadow-sm active:scale-[0.98] cursor-pointer whitespace-nowrap w-full sm:w-auto"
             >
               Book Appointment
             </button>
@@ -142,10 +133,9 @@ const DoctorDetailsCard = ({ doctor }) => {
       </div>
 
       <BookingModal
+        doctorName={name}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSubmit={handleBookingSubmit}
-        doctorName={name}
       />
     </div>
   );
