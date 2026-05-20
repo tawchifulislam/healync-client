@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Toaster } from 'react-hot-toast';
 import { FiUser, FiCalendar } from 'react-icons/fi';
 
 export default function DashboardLayout({ children }) {
@@ -49,7 +50,10 @@ export default function DashboardLayout({ children }) {
           className="w-full max-w-sm data-[wide=true]:max-w-4xl bg-white border border-slate-200/60 rounded-2xl p-6 sm:p-8 shadow-sm min-h-70 transition-all duration-300 flex items-center justify-center"
           data-wide={pathname === '/dashboard/my-booking'}
         >
-          <div className="w-full h-full">{children}</div>
+          <div className="w-full h-full">
+            {children}
+            <Toaster />
+          </div>
         </div>
       </div>
     </div>

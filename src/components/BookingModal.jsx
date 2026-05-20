@@ -52,7 +52,7 @@ export default function BookingModal({ doctorName }) {
   return (
     <dialog
       id="booking_modal"
-      className="fixed inset-0 z-50 m-auto h-fit w-full max-w-md rounded-3xl bg-white border border-slate-200/60 shadow-2xl p-0 overflow-hidden backdrop:bg-black/40 backdrop:backdrop-blur-sm open:flex open:flex-col animate-fadeIn select-none"
+      className="fixed inset-0 z-50 m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-md rounded-3xl bg-white border border-slate-200/60 shadow-2xl p-0 overflow-y-auto backdrop:bg-black/40 backdrop:backdrop-blur-sm open:flex open:flex-col animate-fadeIn select-none"
     >
       <div className="bg-[#F8FAFC] p-6 flex items-center gap-4 border-b border-slate-100">
         <div className="w-10 h-10 rounded-xl bg-[#0284C7]/5 flex items-center justify-center text-[#0284C7]">
