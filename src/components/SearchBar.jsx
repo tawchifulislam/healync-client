@@ -9,9 +9,6 @@ const SearchBar = () => {
   const searchParams = useSearchParams();
 
   const [search, setSearch] = useState(searchParams.get('searchTerm') || '');
-  useEffect(() => {
-    searchParams.get('searchTerm') || '';
-  }, [searchParams]);
 
   const handleSearch = e => {
     if (e) e.preventDefault();

@@ -20,32 +20,30 @@ export default function BookingModal({ doctorName, isOpen, onClose }) {
     const phone = e.target.phone.value;
     const appointmentTime = e.target.appointmentTime.value;
 
-    const handleBooking = async () => {
-      const bookingData = {
-        userEmail,
-        doctorName,
-        patientName,
-        gender,
-        phone,
-        appointmentDate,
-        appointmentTime,
-      };
-
-      const { data: tokenData } = await authClient.token();
-      const token = tokenData?.token;
-
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(bookingData),
-      });
-      const data = await res.json();
+    const bookingData = {
+      userEmail,
+      doctorName,
+      patientName,
+      gender,
+      phone,
+      appointmentDate,
+      appointmentTime,
     };
 
-    await handleBooking();
+    const { data: tokenData } = await authClient.token();
+    const token = tokenData?.token;
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(bookingData),
+    });
+
+    const data = await res.json();
+
     showSuccessToast('Appointment booked successfully!');
     onClose();
   };
