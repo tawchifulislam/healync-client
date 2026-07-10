@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiMapPin, FiAward, FiDollarSign, FiArrowRight } from 'react-icons/fi';
 
-const DoctorCard = ({ doctor }) => {
+const DoctorCard = ({ doctor }: { doctor: { _id: string; name: string; specialty: string; image: string; experience: string; hospital: string; fee: string; }; }) => {
   const { _id, name, specialty, image, experience, hospital, fee } = doctor;
 
   return (

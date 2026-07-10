@@ -1,20 +1,28 @@
-import DoctorDetailsCard from '@/components/DoctorDetailsCard';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import type { Metadata } from 'next';
+import type { Doctor } from '@/types';
+import DoctorDetailsCard from '@/components/DoctorDetailsCard';
 
-export const metadata = {
-  title: 'Doctor Profile',
+export const metadata: Metadata = {
+  title: 'Doctor Profile | Healync',
   description: 'View doctor profile and schedule your appointment.',
 };
 
-export default async function DoctorDetails({ params }) {
+interface DoctorDetailsProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function DoctorDetails({
+  params,
+}: DoctorDetailsProps): Promise<React.ReactElement> {
   const { id } = await params;
 
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
 
-  const fetchDoctor = async doctorsId => {
+  const fetchDoctor = async (doctorsId: string): Promise<Doctor> => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/doctors/${doctorsId}`,
       {
@@ -27,7 +35,7 @@ export default async function DoctorDetails({ params }) {
     return data || {};
   };
 
-  const doctor = await fetchDoctor(id);
+  const doctor: Doctor = await fetchDoctor(id);
 
   return (
     <main className="w-full min-h-screen bg-[#F8FAFC] py-12 select-none">
@@ -37,7 +45,6 @@ export default async function DoctorDetails({ params }) {
             Doctor Profile
           </h1>
         </div>
-
         <DoctorDetailsCard doctor={doctor} />
       </div>
     </main>

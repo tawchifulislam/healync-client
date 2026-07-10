@@ -1,16 +1,23 @@
 import DoctorCard from '@/components/DoctorCard';
-import SearchBar from '@/components/SearchBar';
 import { fetchDoctors } from '@/lib/doctors/data';
+import type { Metadata } from 'next';
+import type { Doctor } from '@/types';
+import SearchBar from '@/components/SearchBar';
 
-export const metadata = {
-  title: 'All Appointments',
+export const metadata: Metadata = {
+  title: 'All Appointments | Healync',
   description: 'Find and book top-rated specialists.',
 };
 
-const AppointmentsPage = async props => {
-  const searchParams = await props.searchParams;
-  const searchTerm = searchParams?.searchTerm || '';
-  const doctors = await fetchDoctors(searchTerm);
+interface AppointmentsPageProps {
+  searchParams: Promise<{ searchTerm?: string }>;
+}
+
+const AppointmentsPage = async ({
+  searchParams,
+}: AppointmentsPageProps): Promise<React.ReactElement> => {
+  const { searchTerm = '' } = await searchParams;
+  const doctors: Doctor[] = await fetchDoctors(searchTerm);
 
   return (
     <main className="w-full min-h-screen bg-[#F8FAFC] py-12 select-none">
@@ -31,8 +38,8 @@ const AppointmentsPage = async props => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {doctors.map(doctor => (
-            <DoctorCard key={doctor.id} doctor={doctor} />
+          {doctors.map((doctor: Doctor) => (
+            <DoctorCard key={doctor._id} doctor={doctor} />
           ))}
         </div>
       </div>
