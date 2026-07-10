@@ -1,7 +1,8 @@
 import { fetchTopRatedDoctors } from '@/lib/doctors/data';
-import DoctorCard from '../components/DoctorCard';
+
 import { FiArrowRight, FiAward } from 'react-icons/fi';
 import Link from 'next/link';
+import DoctorCard from './DoctorCard';
 
 const TopRatedDoctors = async () => {
   const doctors = await fetchTopRatedDoctors();
