@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 
-export const showSuccessToast = message => {
+export const showSuccessToast = (message: string): void => {
   toast.success(message, {
     id: message,
     style: {
@@ -20,7 +20,7 @@ export const showSuccessToast = message => {
   });
 };
 
-export const showErrorToast = message => {
+export const showErrorToast = (message: string): void => {
   toast.error(message, {
     id: message,
     style: {
