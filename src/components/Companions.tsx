@@ -5,14 +5,19 @@ import Image from 'next/image';
 import { FiStar, FiMapPin, FiBriefcase, FiGlobe } from 'react-icons/fi';
 import { Toaster } from 'react-hot-toast';
 import { showSuccessToast } from '@/lib/notification';
+import type { Companion } from '@/types';
 
-const Companions = () => {
-  const [companions, setCompanions] = useState([]);
+interface CompanionsData {
+  companions: Companion[];
+}
+
+const Companions = (): React.ReactElement => {
+  const [companions, setCompanions] = useState<Companion[]>([]);
 
   useEffect(() => {
-    const loadCompanions = async () => {
+    const loadCompanions = async (): Promise<void> => {
       const res = await fetch('/companions.json');
-      const data = await res.json();
+      const data: CompanionsData = await res.json();
 
       if (data?.companions) {
         const selectedIds = [2, 4, 7, 8];
@@ -26,7 +31,7 @@ const Companions = () => {
     loadCompanions();
   }, []);
 
-  const handleBooking = name => {
+  const handleBooking = (name: string): void => {
     showSuccessToast(`Companion request sent to ${name}!`);
   };
 
@@ -52,7 +57,7 @@ const Companions = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {companions.map(item => (
+          {companions.map((item: Companion) => (
             <div
               key={item.id}
               className="bg-white border border-slate-200/60 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300 flex flex-col justify-between"

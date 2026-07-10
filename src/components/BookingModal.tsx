@@ -4,21 +4,40 @@ import { useState } from 'react';
 import { authClient } from '@/lib/auth-client';
 import { FiUser, FiPhone, FiCalendar, FiClock } from 'react-icons/fi';
 import { showSuccessToast } from '@/lib/notification';
+import type { FormEvent } from 'react';
 
-export default function BookingModal({ doctorName, isOpen, onClose }) {
+interface BookingModalProps {
+  doctorName: string;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function BookingModal({
+  doctorName,
+  isOpen,
+  onClose,
+}: BookingModalProps): React.ReactElement | null {
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const userEmail = user?.email || '';
 
-  const [appointmentDate, setAppointmentDate] = useState('');
+  const [appointmentDate, setAppointmentDate] = useState<string>('');
+
   if (!isOpen) return null;
 
-  const onSubmit = async e => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    const patientName = e.target.patientName.value;
-    const gender = e.target.gender.value;
-    const phone = e.target.phone.value;
-    const appointmentTime = e.target.appointmentTime.value;
+
+    const form = e.currentTarget;
+    const patientName = (
+      form.elements.namedItem('patientName') as HTMLInputElement
+    ).value;
+    const gender = (form.elements.namedItem('gender') as HTMLSelectElement)
+      .value;
+    const phone = (form.elements.namedItem('phone') as HTMLInputElement).value;
+    const appointmentTime = (
+      form.elements.namedItem('appointmentTime') as HTMLInputElement
+    ).value;
 
     const bookingData = {
       userEmail,
@@ -33,7 +52,7 @@ export default function BookingModal({ doctorName, isOpen, onClose }) {
     const { data: tokenData } = await authClient.token();
     const token = tokenData?.token;
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -41,8 +60,6 @@ export default function BookingModal({ doctorName, isOpen, onClose }) {
       },
       body: JSON.stringify(bookingData),
     });
-
-    const data = await res.json();
 
     showSuccessToast('Appointment booked successfully!');
     onClose();

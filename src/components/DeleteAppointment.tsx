@@ -1,19 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-import { FiTrash2 } from 'react-icons/fi';
 import { authClient } from '@/lib/auth-client';
+import { FiTrash2 } from 'react-icons/fi';
+import type { Booking } from '@/types';
+
+interface DeleteAppointmentProps {
+  booking: Booking;
+  onDeleteSuccess: () => void;
+}
 
 export function DeleteAppointment({
   booking,
   onDeleteSuccess,
-}: {
-  booking: any;
-  onDeleteSuccess: () => void;
-}) {
+}: DeleteAppointmentProps): React.ReactElement {
   const { _id, doctorName } = booking;
 
-  const handleDelete = async () => {
+  const handleDelete = async (): Promise<void> => {
     const { data: tokenData } = await authClient.token();
     const token = tokenData?.token;
 
@@ -29,11 +31,8 @@ export function DeleteAppointment({
     );
 
     if (res.ok) {
-      await res.json();
       (
-        document.getElementById(
-          `delete_modal_${_id}`,
-        ) as HTMLDialogElement | null
+        document.getElementById(`delete_modal_${_id}`) as HTMLDialogElement
       )?.close();
       onDeleteSuccess();
     }
@@ -42,13 +41,11 @@ export function DeleteAppointment({
   return (
     <>
       <button
-        onClick={() => {
+        onClick={() =>
           (
-            document.getElementById(
-              `delete_modal_${_id}`,
-            ) as HTMLDialogElement | null
-          )?.showModal();
-        }}
+            document.getElementById(`delete_modal_${_id}`) as HTMLDialogElement
+          )?.showModal()
+        }
         className="h-8 px-3 rounded-lg bg-rose-50/60 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-100 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer min-w-fit shrink-0"
       >
         <FiTrash2 size={11} />
@@ -78,7 +75,7 @@ export function DeleteAppointment({
                 (
                   document.getElementById(
                     `delete_modal_${_id}`,
-                  ) as HTMLDialogElement | null
+                  ) as HTMLDialogElement
                 )?.close()
               }
               className="h-9 px-4 rounded-xl text-slate-500 border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-xs transition-all cursor-pointer shadow-sm flex-1 xs:flex-none"

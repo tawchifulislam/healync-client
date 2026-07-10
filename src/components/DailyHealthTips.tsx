@@ -4,15 +4,22 @@ import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { FiChevronLeft, FiChevronRight, FiHeart } from 'react-icons/fi';
-
 import 'swiper/css';
 
-const DailyHealthTips = () => {
-  const [Lottie, setLottie] = useState(null);
+type LottiePlayerType = React.ComponentType<{
+  src: string;
+  background: string;
+  loop: boolean;
+  autoplay: boolean;
+  className: string;
+}>;
+
+const DailyHealthTips = (): React.ReactElement => {
+  const [Lottie, setLottie] = useState<LottiePlayerType | null>(null);
 
   useEffect(() => {
     import('@dotlottie/react-player').then(mod =>
-      setLottie(() => mod.DotLottiePlayer),
+      setLottie(() => mod.DotLottiePlayer as LottiePlayerType),
     );
   }, []);
 
@@ -66,7 +73,7 @@ const DailyHealthTips = () => {
                       at something 20 feet away for at least 20 seconds.
                     </p>
                     <p className="text-xs sm:text-sm text-slate-500 font-semibold bg-[#F8FAFC] p-3 rounded-xl border border-slate-100">
-                      💡 Extra Tip: Remember to blink frequently and adjust your
+                      Extra Tip: Remember to blink frequently and adjust your
                       monitor brightness to match the surrounding room light.
                     </p>
                   </div>
@@ -124,6 +131,7 @@ const DailyHealthTips = () => {
                 </div>
               </SwiperSlide>
             </Swiper>
+
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-4 sm:hidden">
               <button className="tips-prev-btn flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#0284C7] shadow-sm cursor-pointer active:scale-95 transition-all">
                 <FiChevronLeft size={18} />
