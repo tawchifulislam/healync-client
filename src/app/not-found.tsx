@@ -3,12 +3,18 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-const NotFound = () => {
-  const [Lottie, setLottie] = useState(null);
+const NotFound = (): React.ReactElement => {
+  const [Lottie, setLottie] = useState<React.ComponentType<{
+    src: string;
+    background: string;
+    loop: boolean;
+    autoplay: boolean;
+    className: string;
+  }> | null>(null);
 
   useEffect(() => {
     import('@dotlottie/react-player').then(mod =>
-      setLottie(() => mod.DotLottiePlayer),
+      setLottie(() => mod.DotLottiePlayer as any),
     );
   }, []);
 
