@@ -1,24 +1,32 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { FcGoogle } from 'react-icons/fc';
 import { FiUser, FiMail, FiImage, FiLock } from 'react-icons/fi';
 import { Toaster } from 'react-hot-toast';
 import { signIn, signUp } from '@/lib/auth-client';
 import { showSuccessToast, showErrorToast } from '@/lib/notification';
+import type { FormEvent } from 'react';
 
-export default function Register() {
-  const router = useRouter();
-
-  const handleRegister = async e => {
+export default function Register(): React.ReactElement {
+  const handleRegister = async (
+    e: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const registerData = Object.fromEntries(formData.entries());
+    const registerData = Object.fromEntries(formData.entries()) as {
+      name: string;
+      email: string;
+      image: string;
+      password: string;
+    };
 
-    const { data, error } = await signUp.email({
-      ...registerData,
+    const { error } = await signUp.email({
+      name: registerData.name,
+      email: registerData.email,
+      image: registerData.image,
+      password: registerData.password,
     });
 
     if (error) {
@@ -31,8 +39,8 @@ export default function Register() {
     }, 200);
   };
 
-  const handleGoogleSignin = async () => {
-    const data = await signIn.social({
+  const handleGoogleSignin = async (): Promise<void> => {
+    await signIn.social({
       provider: 'google',
     });
   };
