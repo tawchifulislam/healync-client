@@ -1,24 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { FcGoogle } from 'react-icons/fc';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { Toaster } from 'react-hot-toast';
 import { signIn } from '@/lib/auth-client';
 import { showSuccessToast, showErrorToast } from '@/lib/notification';
+import type { FormEvent } from 'react';
 
-const LoginPage = () => {
-  const router = useRouter();
-
-  const handleLogin = async e => {
+const LoginPage = (): React.ReactElement => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const loginData = Object.fromEntries(formData.entries());
+    const loginData = Object.fromEntries(formData.entries()) as {
+      email: string;
+      password: string;
+    };
 
-    const { data, error } = await signIn.email({
-      ...loginData,
+    const { error } = await signIn.email({
+      email: loginData.email,
+      password: loginData.password,
     });
 
     if (error) {
@@ -31,8 +33,8 @@ const LoginPage = () => {
     }, 200);
   };
 
-  const handleGoogleSignin = async () => {
-    const data = await signIn.social({
+  const handleGoogleSignin = async (): Promise<void> => {
+    await signIn.social({
       provider: 'google',
     });
   };
@@ -113,7 +115,7 @@ const LoginPage = () => {
         </button>
 
         <p className="text-center text-sm text-slate-500 font-medium mt-6">
-          Don’t have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link
             href="/signup"
             className="text-[#0284C7] font-bold hover:underline"
