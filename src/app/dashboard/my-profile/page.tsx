@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
 import { UpdateUserModal } from '@/components/UpdateUserModal';
 
-const MyProfile = () => {
+const MyProfile = (): React.ReactElement | null => {
   const userData = authClient.useSession();
   const user = userData.data?.user;
   const router = useRouter();

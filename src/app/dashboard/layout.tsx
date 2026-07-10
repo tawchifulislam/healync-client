@@ -5,7 +5,13 @@ import { usePathname } from 'next/navigation';
 import { Toaster } from 'react-hot-toast';
 import { FiUser, FiCalendar } from 'react-icons/fi';
 
-export default function DashboardLayout({ children }) {
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function DashboardLayout({
+  children,
+}: DashboardLayoutProps): React.ReactElement {
   const pathname = usePathname();
   const isWide = pathname === '/dashboard/my-booking';
 

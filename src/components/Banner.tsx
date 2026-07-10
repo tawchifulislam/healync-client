@@ -10,15 +10,22 @@ import {
   FiChevronRight,
 } from 'react-icons/fi';
 import Link from 'next/link';
-
 import 'swiper/css';
 
-const Banner = () => {
-  const [Lottie, setLottie] = useState(null);
+type LottiePlayerType = React.ComponentType<{
+  src: string;
+  background: string;
+  loop: boolean;
+  autoplay: boolean;
+  className: string;
+}>;
+
+const Banner = (): React.ReactElement => {
+  const [Lottie, setLottie] = useState<LottiePlayerType | null>(null);
 
   useEffect(() => {
     import('@dotlottie/react-player').then(mod =>
-      setLottie(() => mod.DotLottiePlayer),
+      setLottie(() => mod.DotLottiePlayer as LottiePlayerType),
     );
   }, []);
 
@@ -121,6 +128,7 @@ const Banner = () => {
             </div>
           </SwiperSlide>
         </Swiper>
+
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 flex gap-4 xl:hidden">
           <button className="custom-prev-btn flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#0284C7] shadow-sm cursor-pointer">
             <FiChevronLeft size={20} />

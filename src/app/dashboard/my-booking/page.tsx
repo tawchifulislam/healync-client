@@ -4,22 +4,23 @@ import { useState, useEffect } from 'react';
 import { authClient } from '@/lib/auth-client';
 import { FiCalendar, FiClock, FiUser, FiPhone } from 'react-icons/fi';
 import Link from 'next/link';
-import { DeleteAppointment } from '@/components/DeleteAppointment';
 import UpdateBookingModal from '@/components/UpdateBookingModal';
 import { showSuccessToast } from '@/lib/notification';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import type { Booking } from '@/types';
+import { DeleteAppointment } from '@/components/DeleteAppointment';
 
-export default function MyBookingPage() {
+export default function MyBookingPage(): React.ReactElement {
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const userEmail = user?.email || '';
 
-  const [bookings, setBookings] = useState([]);
-  const [reload, setReload] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [reload, setReload] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchBookings = async () => {
+    const fetchBookings = async (): Promise<void> => {
       if (!userEmail) return;
       setIsLoading(true);
 
@@ -45,6 +46,7 @@ export default function MyBookingPage() {
 
     fetchBookings();
   }, [userEmail, reload]);
+
   if (isLoading) {
     return (
       <div className="w-full min-h-50 flex items-center justify-center">
@@ -71,7 +73,7 @@ export default function MyBookingPage() {
         </div>
       ) : (
         <div className="flex flex-col gap-4">
-          {bookings.map(booking => (
+          {bookings.map((booking: Booking) => (
             <div
               key={booking._id}
               className="w-full bg-white border border-slate-200/60 rounded-2xl p-5 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 transition-all duration-300 hover:border-slate-300"

@@ -4,7 +4,13 @@ import { useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 import { authClient } from '@/lib/auth-client';
 
-export function DeleteAppointment({ booking, onDeleteSuccess }) {
+export function DeleteAppointment({
+  booking,
+  onDeleteSuccess,
+}: {
+  booking: any;
+  onDeleteSuccess: () => void;
+}) {
   const { _id, doctorName } = booking;
 
   const handleDelete = async () => {
@@ -24,7 +30,11 @@ export function DeleteAppointment({ booking, onDeleteSuccess }) {
 
     if (res.ok) {
       await res.json();
-      document.getElementById(`delete_modal_${_id}`).close();
+      (
+        document.getElementById(
+          `delete_modal_${_id}`,
+        ) as HTMLDialogElement | null
+      )?.close();
       onDeleteSuccess();
     }
   };
@@ -32,9 +42,13 @@ export function DeleteAppointment({ booking, onDeleteSuccess }) {
   return (
     <>
       <button
-        onClick={() =>
-          document.getElementById(`delete_modal_${_id}`).showModal()
-        }
+        onClick={() => {
+          (
+            document.getElementById(
+              `delete_modal_${_id}`,
+            ) as HTMLDialogElement | null
+          )?.showModal();
+        }}
         className="h-8 px-3 rounded-lg bg-rose-50/60 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-100 font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer min-w-fit shrink-0"
       >
         <FiTrash2 size={11} />
@@ -61,7 +75,11 @@ export function DeleteAppointment({ booking, onDeleteSuccess }) {
             <button
               type="button"
               onClick={() =>
-                document.getElementById(`delete_modal_${_id}`).close()
+                (
+                  document.getElementById(
+                    `delete_modal_${_id}`,
+                  ) as HTMLDialogElement | null
+                )?.close()
               }
               className="h-9 px-4 rounded-xl text-slate-500 border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-xs transition-all cursor-pointer shadow-sm flex-1 xs:flex-none"
             >
