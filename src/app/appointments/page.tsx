@@ -1,8 +1,10 @@
 import DoctorCard from '@/components/DoctorCard';
+import DoctorCardSkeleton from '@/components/DoctorCardSkeleton';
+import SearchBar from '@/components/SearchBar';
 import { fetchDoctors } from '@/lib/doctors/data';
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import type { Doctor } from '@/types';
-import SearchBar from '@/components/SearchBar';
 
 export const metadata: Metadata = {
   title: 'All Appointments | Healync',
@@ -13,11 +15,36 @@ interface AppointmentsPageProps {
   searchParams: Promise<{ searchTerm?: string }>;
 }
 
+const DoctorsGrid = async ({
+  searchTerm,
+}: {
+  searchTerm: string;
+}): Promise<React.ReactElement> => {
+  const doctors: Doctor[] = await fetchDoctors(searchTerm);
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {doctors.map((doctor: Doctor) => (
+        <DoctorCard key={doctor._id} doctor={doctor} />
+      ))}
+    </div>
+  );
+};
+
+const SkeletonGrid = (): React.ReactElement => {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {Array.from({ length: 8 }).map((_, idx) => (
+        <DoctorCardSkeleton key={idx} />
+      ))}
+    </div>
+  );
+};
+
 const AppointmentsPage = async ({
   searchParams,
 }: AppointmentsPageProps): Promise<React.ReactElement> => {
   const { searchTerm = '' } = await searchParams;
-  const doctors: Doctor[] = await fetchDoctors(searchTerm);
 
   return (
     <main className="w-full min-h-screen bg-[#F8FAFC] py-12 select-none">
@@ -37,11 +64,9 @@ const AppointmentsPage = async ({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {doctors.map((doctor: Doctor) => (
-            <DoctorCard key={doctor._id} doctor={doctor} />
-          ))}
-        </div>
+        <Suspense fallback={<SkeletonGrid />}>
+          <DoctorsGrid searchTerm={searchTerm} />
+        </Suspense>
       </div>
     </main>
   );
