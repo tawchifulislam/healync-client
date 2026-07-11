@@ -3,6 +3,7 @@
 import { FaYoutube, FaFacebook } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import Logo from './Logo';
+import Link from 'next/link';
 
 const Footer = (): React.ReactElement => {
   const currentYear = new Date().getFullYear();
@@ -28,15 +29,21 @@ const Footer = (): React.ReactElement => {
 
           <div className="flex flex-col items-center md:items-end gap-2.5">
             <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-600">
-              <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
-                Privacy Policy
-              </span>
-              <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
-                Terms of Service
-              </span>
-              <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
-                Contact Support
-              </span>
+              <Link href="/">
+                <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
+                  Home
+                </span>
+              </Link>
+              <Link href="/appointments">
+                <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
+                  Appointments
+                </span>
+              </Link>
+              <Link href="/dashboard">
+                <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
+                  Dashboard
+                </span>
+              </Link>
             </div>
             <p className="text-xs sm:text-sm text-slate-400/80 font-medium">
               &copy; {currentYear} Healync. All rights reserved.
