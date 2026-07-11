@@ -6,21 +6,22 @@ import { FiMail, FiLock } from 'react-icons/fi';
 import { Toaster } from 'react-hot-toast';
 import { signIn } from '@/lib/auth-client';
 import { showSuccessToast, showErrorToast } from '@/lib/notification';
+import { useState } from 'react';
 import type { FormEvent } from 'react';
 
+const DEMO_EMAIL = 'demo@healync.com';
+const DEMO_PASSWORD = 'Demo1234';
+
 const LoginPage = (): React.ReactElement => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
-    const loginData = Object.fromEntries(formData.entries()) as {
-      email: string;
-      password: string;
-    };
-
     const { error } = await signIn.email({
-      email: loginData.email,
-      password: loginData.password,
+      email,
+      password,
     });
 
     if (error) {
@@ -39,6 +40,11 @@ const LoginPage = (): React.ReactElement => {
     });
   };
 
+  const fillDemoCredentials = (): void => {
+    setEmail(DEMO_EMAIL);
+    setPassword(DEMO_PASSWORD);
+  };
+
   return (
     <main className="w-full min-h-[85vh] bg-[#F8FAFC] flex items-center justify-center px-4 select-none py-12">
       <Toaster />
@@ -53,6 +59,15 @@ const LoginPage = (): React.ReactElement => {
           </h1>
         </div>
 
+        {/* Demo Credentials Button */}
+        <button
+          type="button"
+          onClick={fillDemoCredentials}
+          className="w-full h-10 rounded-xl border border-dashed border-[#0284C7] text-[#0284C7] font-bold text-xs hover:bg-[#0284C7]/5 transition-all cursor-pointer mb-5"
+        >
+          Use Demo Credentials
+        </button>
+
         <div className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">
@@ -63,6 +78,8 @@ const LoginPage = (): React.ReactElement => {
               <input
                 name="email"
                 type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 className="w-full h-11 pl-11 pr-4 rounded-xl border border-slate-200 text-sm font-semibold text-[#0F172A] focus:outline-none focus:border-[#0284C7] bg-[#F8FAFC]/50 transition-colors"
                 required
               />
@@ -83,6 +100,8 @@ const LoginPage = (): React.ReactElement => {
               <input
                 name="password"
                 type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 className="w-full h-11 pl-11 pr-4 rounded-xl border border-slate-200 text-sm font-semibold text-[#0F172A] focus:outline-none focus:border-[#0284C7] bg-[#F8FAFC]/50 transition-colors"
                 required
               />
