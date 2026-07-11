@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Logo = () => {
+const Logo = (): React.ReactElement => {
   return (
     <Link href="/" className="flex items-center select-none group">
       <div className="relative transform rotate-30 z-10 group-hover:scale-105 group-hover:-rotate-12 transition-transform duration-300">

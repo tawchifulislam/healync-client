@@ -3,15 +3,17 @@
 import { authClient } from '@/lib/auth-client';
 import { FiUser, FiImage, FiEdit2 } from 'react-icons/fi';
 import { showSuccessToast } from '@/lib/notification';
+import type { FormEvent } from 'react';
 
-export function UpdateUserModal() {
+export function UpdateUserModal(): React.ReactElement {
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
-  const onSubmit = async e => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const image = e.target.image.value;
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+    const image = (form.elements.namedItem('image') as HTMLInputElement).value;
 
     await authClient.updateUser({
       name,
@@ -19,13 +21,17 @@ export function UpdateUserModal() {
     });
 
     showSuccessToast('Profile updated successfully!');
-    document.getElementById('update_modal').close();
+    (document.getElementById('update_modal') as HTMLDialogElement)?.close();
   };
 
   return (
     <>
       <button
-        onClick={() => document.getElementById('update_modal').showModal()}
+        onClick={() =>
+          (
+            document.getElementById('update_modal') as HTMLDialogElement
+          )?.showModal()
+        }
         className="w-full h-11 rounded-xl bg-[#0284C7] text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-[#0284C7]/90 active:scale-[0.98] transition-all shadow-sm cursor-pointer"
       >
         <FiEdit2 size={13} /> Update Profile
@@ -87,7 +93,11 @@ export function UpdateUserModal() {
           <div className="flex gap-3 pt-4 justify-end border-t border-slate-100 mt-6">
             <button
               type="button"
-              onClick={() => document.getElementById('update_modal').close()}
+              onClick={() =>
+                (
+                  document.getElementById('update_modal') as HTMLDialogElement
+                )?.close()
+              }
               className="h-10 px-4 rounded-xl text-slate-500 font-semibold text-xs hover:bg-slate-100 transition-all cursor-pointer"
             >
               Cancel

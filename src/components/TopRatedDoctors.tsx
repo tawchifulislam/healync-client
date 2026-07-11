@@ -1,11 +1,11 @@
 import { fetchTopRatedDoctors } from '@/lib/doctors/data';
-
+import DoctorCard from '@/components/DoctorCard';
 import { FiArrowRight, FiAward } from 'react-icons/fi';
 import Link from 'next/link';
-import DoctorCard from './DoctorCard';
+import type { Doctor } from '@/types';
 
-const TopRatedDoctors = async () => {
-  const doctors = await fetchTopRatedDoctors();
+const TopRatedDoctors = async (): Promise<React.ReactElement> => {
+  const doctors: Doctor[] = await fetchTopRatedDoctors();
 
   return (
     <section className="w-full bg-[#F8FAFC] py-16 select-none">
@@ -33,8 +33,8 @@ const TopRatedDoctors = async () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {doctors.map(doctor => (
-            <DoctorCard key={doctor.id} doctor={doctor} />
+          {doctors.map((doctor: Doctor) => (
+            <DoctorCard key={doctor._id} doctor={doctor} />
           ))}
         </div>
       </div>

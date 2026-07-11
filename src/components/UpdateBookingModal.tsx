@@ -11,12 +11,22 @@ import {
 import { useOverlayState } from '@heroui/react';
 import { FiEdit2, FiUser, FiClock, FiPhone } from 'react-icons/fi';
 import { authClient } from '@/lib/auth-client';
+import type { Booking } from '@/types';
+import type { FormEvent } from 'react';
 
-export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
+interface UpdateBookingModalProps {
+  booking: Booking;
+  onUpdateSuccess: () => void;
+}
+
+export default function UpdateBookingModal({
+  booking,
+  onUpdateSuccess,
+}: UpdateBookingModalProps): React.ReactElement | null {
   const state = useOverlayState();
   const { _id, patientName, appointmentTime, phone } = booking || {};
 
-  const onSubmit = async e => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const updatedData = Object.fromEntries(formData.entries());
@@ -49,7 +59,7 @@ export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
     <Modal>
       <Button
         onPress={state.open}
-        variant="light"
+        variant="secondary"
         className="h-8 px-3 rounded-lg border border-slate-200 text-slate-600 hover:text-[#0284C7] hover:border-[#0284C7] font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer bg-white min-w-fit shrink-0"
       >
         <FiEdit2 size={11} />
@@ -152,7 +162,7 @@ export default function UpdateBookingModal({ booking, onUpdateSuccess }) {
                 <Modal.Footer className="flex gap-3 pt-4 justify-end border-t border-slate-100 mt-6">
                   <Button
                     onPress={state.close}
-                    variant="light"
+                    variant="secondary"
                     className="h-10 px-4 rounded-xl text-slate-500 font-semibold text-xs hover:bg-slate-100 transition-all cursor-pointer min-w-fit"
                   >
                     Cancel

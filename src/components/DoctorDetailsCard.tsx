@@ -12,9 +12,16 @@ import {
 } from 'react-icons/fi';
 import { Toaster } from 'react-hot-toast';
 import BookingModal from './BookingModal';
+import type { Doctor } from '@/types';
 
-const DoctorDetailsCard = ({ doctor }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+interface DoctorDetailsCardProps {
+  doctor: Doctor;
+}
+
+const DoctorDetailsCard = ({
+  doctor,
+}: DoctorDetailsCardProps): React.ReactElement => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const {
     name,
@@ -40,7 +47,7 @@ const DoctorDetailsCard = ({ doctor }) => {
               alt={name}
               fill
               className="object-cover object-top"
-              sizes="(max-w: 1024px) 100vw, 320px"
+              sizes="(max-width: 1024px) 100vw, 320px"
               priority
             />
           </div>
@@ -96,7 +103,7 @@ const DoctorDetailsCard = ({ doctor }) => {
                     Available Time Slots
                   </p>
                   <div className="flex flex-wrap gap-1.5">
-                    {availability?.map((time, idx) => (
+                    {availability?.map((time: string, idx: number) => (
                       <span
                         key={idx}
                         className="bg-[#F8FAFC] border border-slate-200/60 px-2.5 py-1 rounded-lg text-slate-600 font-semibold text-[11px] flex items-center gap-1 whitespace-nowrap"

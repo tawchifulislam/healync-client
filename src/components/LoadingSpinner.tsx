@@ -2,15 +2,24 @@
 
 import { useEffect, useState } from 'react';
 
-export default function LoadingSpinner() {
-  const [Lottie, setLottie] = useState(null);
-  const [shouldShow, setShouldShow] = useState(false);
+type LottiePlayerType = React.ComponentType<{
+  src: string;
+  background: string;
+  loop: boolean;
+  autoplay: boolean;
+  speed: number;
+  className: string;
+}>;
+
+export default function LoadingSpinner(): React.ReactElement {
+  const [Lottie, setLottie] = useState<LottiePlayerType | null>(null);
+  const [shouldShow, setShouldShow] = useState<boolean>(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setShouldShow(true), 100);
 
     import('@dotlottie/react-player').then(mod => {
-      setLottie(() => mod.DotLottiePlayer);
+      setLottie(() => mod.DotLottiePlayer as LottiePlayerType);
     });
 
     return () => clearTimeout(timer);

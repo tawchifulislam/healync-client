@@ -1,8 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiMapPin, FiAward, FiDollarSign, FiArrowRight } from 'react-icons/fi';
+import type { Doctor } from '@/types';
 
-const DoctorCard = ({ doctor }: { doctor: { _id: string; name: string; specialty: string; image: string; experience: string; hospital: string; fee: string; }; }) => {
+interface DoctorCardProps {
+  doctor: Doctor;
+}
+
+const DoctorCard = ({ doctor }: DoctorCardProps): React.ReactElement => {
   const { _id, name, specialty, image, experience, hospital, fee } = doctor;
 
   return (
@@ -14,7 +19,7 @@ const DoctorCard = ({ doctor }: { doctor: { _id: string; name: string; specialty
             alt={name}
             fill
             className="object-cover object-top hover:scale-105 transition-transform duration-500"
-            sizes="(max-w: 768px) 100vw, (max-w: 1200px) 50vw, 25vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
             priority
           />
           <div className="absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-white to-transparent" />

@@ -8,9 +8,9 @@ import Image from 'next/image';
 import Logo from './Logo';
 import { authClient, useSession } from '@/lib/auth-client';
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+const Navbar = (): React.ReactElement => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [scrolled, setScrolled] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -18,10 +18,11 @@ const Navbar = () => {
   const user = session?.user;
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = (): void => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -33,11 +34,7 @@ const Navbar = () => {
     };
   }, [isOpen]);
 
-  useEffect(() => {
-    false;
-  }, [pathname]);
-
-  const handleLogOut = async () => {
+  const handleLogOut = async (): Promise<void> => {
     await authClient.signOut();
     router.replace('/');
     router.refresh();

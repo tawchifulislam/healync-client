@@ -4,7 +4,7 @@ import { FaYoutube, FaFacebook } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import Logo from './Logo';
 
-const Footer = () => {
+const Footer = (): React.ReactElement => {
   const currentYear = new Date().getFullYear();
 
   return (

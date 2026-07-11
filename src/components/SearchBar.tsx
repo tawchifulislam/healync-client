@@ -1,17 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FiSearch } from 'react-icons/fi';
+import type { FormEvent } from 'react';
 
-const SearchBar = () => {
+const SearchBar = (): React.ReactElement => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [search, setSearch] = useState(searchParams.get('searchTerm') || '');
+  const [search, setSearch] = useState<string>(
+    searchParams.get('searchTerm') || '',
+  );
 
-  const handleSearch = e => {
-    if (e) e.preventDefault();
+  const handleSearch = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
 
     const params = new URLSearchParams(searchParams.toString());
 
