@@ -4,6 +4,7 @@ import Companions from '@/components/Companions';
 import TopRatedDoctors from '@/components/TopRatedDoctors';
 import Statistics from '@/components/Statistics';
 import HowItWorks from '@/components/HowItWorks';
+import FAQ from '@/components/FAQ';
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <HowItWorks />
       <Companions />
       <DailyHealthTips />
+      <FAQ />
     </main>
   );
 }

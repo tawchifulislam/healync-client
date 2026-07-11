@@ -40,16 +40,9 @@ const pieData = [
 
 const COLORS = ['#0284C7', '#0EA5E9', '#38BDF8', '#BAE6FD'];
 
-const stats = [
-  { label: 'Total Doctors', value: '120+' },
-  { label: 'Appointments Booked', value: '5,000+' },
-  { label: 'Happy Patients', value: '4,500+' },
-  { label: 'Specialties', value: '20+' },
-];
-
 const Statistics = (): React.ReactElement => {
   return (
-    <section className="w-full bg-white py-16 select-none">
+    <section className="w-full bg-[#F8FAFC] py-16 select-none">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-[#0284C7] bg-[#0284C7]/5 px-2.5 py-1 rounded-md">
@@ -63,22 +56,8 @@ const Statistics = (): React.ReactElement => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-          {stats.map((stat, idx) => (
-            <div
-              key={idx}
-              className="bg-[#F8FAFC] border border-slate-200/60 rounded-2xl p-6 text-center shadow-sm"
-            >
-              <p className="text-3xl font-black text-[#0284C7]">{stat.value}</p>
-              <p className="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-[#F8FAFC] border border-slate-200/60 rounded-2xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">
             <h3 className="text-base font-black text-[#0F172A] mb-6">
               Monthly Bookings
             </h3>
@@ -105,7 +84,7 @@ const Statistics = (): React.ReactElement => {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-[#F8FAFC] border border-slate-200/60 rounded-2xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">
             <h3 className="text-base font-black text-[#0F172A] mb-6">
               Doctors by Specialty
             </h3>
