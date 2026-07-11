@@ -39,6 +39,16 @@ const Footer = (): React.ReactElement => {
                   Appointments
                 </span>
               </Link>
+              <Link href="/about">
+                <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
+                  About
+                </span>
+              </Link>
+              <Link href="/contact">
+                <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
+                  Contact
+                </span>
+              </Link>
               <Link href="/dashboard">
                 <span className="hover:text-[#0284C7] transition-colors duration-200 cursor-pointer">
                   Dashboard

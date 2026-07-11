@@ -5,7 +5,7 @@ import { FiHeart, FiShield, FiUsers, FiAward } from 'react-icons/fi';
 export const metadata: Metadata = {
   title: 'About Us | Healync',
   description:
-    "Learn about Healync — our mission, values, and the team behind Bangladesh's trusted doctor appointment platform.",
+    "Learn about Healync - our mission, values, and the team behind Bangladesh's trusted doctor appointment platform.",
 };
 
 const values = [
@@ -31,7 +31,7 @@ const values = [
     icon: <FiAward size={22} />,
     title: 'Excellence',
     description:
-      'We are committed to continuous improvement — in our platform, our service, and the healthcare experience we deliver to every user.',
+      'We are committed to continuous improvement - in our platform, our service, and the healthcare experience we deliver to every user.',
   },
 ];
 
@@ -71,7 +71,7 @@ export default function AboutPage(): React.ReactElement {
               Reimagining Healthcare Access in Bangladesh
             </h1>
             <p className="text-sm sm:text-base text-slate-500 font-medium leading-relaxed">
-              Healync was founded with a simple but powerful vision — to make
+              Healync was founded with a simple but powerful vision - to make
               quality healthcare accessible to every patient in Bangladesh,
               without the friction of long queues, phone calls, or uncertainty.
               We connect patients with verified specialists through a seamless,
@@ -96,10 +96,10 @@ export default function AboutPage(): React.ReactElement {
                 patients and quality healthcare. We do this by building a
                 transparent, reliable, and easy-to-use platform where patients
                 can find the right doctor, book an appointment, and receive
-                timely reminders — all in one place.
+                timely reminders - all in one place.
               </p>
               <p className="text-sm sm:text-base text-slate-500 font-medium leading-relaxed">
-                We also offer our unique Medical Companion service — trained
+                We also offer our unique Medical Companion service trained
                 professionals who accompany patients during hospital visits,
                 tests, and consultations, ensuring no one has to navigate the
                 healthcare system alone.

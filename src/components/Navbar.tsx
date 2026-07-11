@@ -76,6 +76,26 @@ const Navbar = (): React.ReactElement => {
               All Appointments
             </Link>
             <Link
+              href="/about"
+              className={`text-sm font-semibold transition-colors duration-200 ${
+                pathname === '/about'
+                  ? 'text-[#0284C7]'
+                  : 'text-slate-600 hover:text-[#0284C7]'
+              }`}
+            >
+              About
+            </Link>
+            <Link
+              href="/contact"
+              className={`text-sm font-semibold transition-colors duration-200 ${
+                pathname === '/contact'
+                  ? 'text-[#0284C7]'
+                  : 'text-slate-600 hover:text-[#0284C7]'
+              }`}
+            >
+              Contact
+            </Link>
+            <Link
               href="/dashboard"
               className={`text-sm font-semibold transition-colors duration-200 ${
                 pathname === '/dashboard' || pathname.startsWith('/dashboard/')
@@ -166,6 +186,28 @@ const Navbar = (): React.ReactElement => {
             }`}
           >
             All Appointments
+          </Link>
+          <Link
+            href="/about"
+            onClick={() => setIsOpen(false)}
+            className={`block py-2.5 px-4 text-base font-semibold rounded-xl transition-colors ${
+              pathname === '/about'
+                ? 'text-[#0284C7] bg-[#0284C7]/5'
+                : 'text-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            About
+          </Link>
+          <Link
+            href="/contact"
+            onClick={() => setIsOpen(false)}
+            className={`block py-2.5 px-4 text-base font-semibold rounded-xl transition-colors ${
+              pathname === '/contact'
+                ? 'text-[#0284C7] bg-[#0284C7]/5'
+                : 'text-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            Contact
           </Link>
           <Link
             href="/dashboard"
