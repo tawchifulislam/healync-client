@@ -3,7 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Toaster } from 'react-hot-toast';
-import { FiUser, FiCalendar } from 'react-icons/fi';
+import { FiUser, FiCalendar, FiPlusCircle, FiList } from 'react-icons/fi';
+import { authClient } from '@/lib/auth-client';
+import { isAdmin } from '@/lib/isAdmin';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -13,7 +15,40 @@ export default function DashboardLayout({
   children,
 }: DashboardLayoutProps): React.ReactElement {
   const pathname = usePathname();
-  const isWide = pathname === '/dashboard/my-booking';
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  const admin = isAdmin(user?.email);
+
+  const isWide =
+    pathname === '/dashboard/my-booking' ||
+    pathname === '/dashboard/manage-doctors';
+
+  const tabs = [
+    {
+      href: '/dashboard/my-booking',
+      label: 'My Booking',
+      icon: <FiCalendar size={15} className="shrink-0" />,
+      show: true,
+    },
+    {
+      href: '/dashboard/my-profile',
+      label: 'My Profile',
+      icon: <FiUser size={15} className="shrink-0" />,
+      show: true,
+    },
+    {
+      href: '/dashboard/add-doctor',
+      label: 'Add Doctor',
+      icon: <FiPlusCircle size={15} className="shrink-0" />,
+      show: admin,
+    },
+    {
+      href: '/dashboard/manage-doctors',
+      label: 'Manage Doctors',
+      icon: <FiList size={15} className="shrink-0" />,
+      show: admin,
+    },
+  ];
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-[#F8FAFC] px-4 sm:px-6 lg:px-8 select-none py-12">
@@ -28,30 +63,23 @@ export default function DashboardLayout({
           </p>
         </header>
 
-        <div className="flex flex-row gap-3 items-center justify-center p-1.5 bg-slate-200/40 rounded-2xl mb-12 border border-slate-200/30 w-full max-w-sm">
-          <Link
-            href="/dashboard/my-booking"
-            className={`flex-1 h-11 flex items-center justify-center gap-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 cursor-pointer ${
-              pathname === '/dashboard/my-booking'
-                ? 'bg-white text-[#0284C7] shadow-sm'
-                : 'text-slate-600 hover:text-[#0284C7]'
-            }`}
-          >
-            <FiCalendar size={15} className="shrink-0" />
-            <span>My Booking</span>
-          </Link>
-
-          <Link
-            href="/dashboard/my-profile"
-            className={`flex-1 h-11 flex items-center justify-center gap-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 cursor-pointer ${
-              pathname === '/dashboard/my-profile'
-                ? 'bg-white text-[#0284C7] shadow-sm'
-                : 'text-slate-600 hover:text-[#0284C7]'
-            }`}
-          >
-            <FiUser size={15} className="shrink-0" />
-            <span>My Profile</span>
-          </Link>
+        <div className="flex flex-row flex-wrap gap-3 items-center justify-center p-1.5 bg-slate-200/40 rounded-2xl mb-12 border border-slate-200/30 w-full max-w-2xl">
+          {tabs
+            .filter(tab => tab.show)
+            .map(tab => (
+              <Link
+                key={tab.href}
+                href={tab.href}
+                className={`flex-1 min-w-fit h-11 flex items-center justify-center gap-2 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 cursor-pointer px-3 ${
+                  pathname === tab.href
+                    ? 'bg-white text-[#0284C7] shadow-sm'
+                    : 'text-slate-600 hover:text-[#0284C7]'
+                }`}
+              >
+                {tab.icon}
+                <span>{tab.label}</span>
+              </Link>
+            ))}
         </div>
 
         <div
