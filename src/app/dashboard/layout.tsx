@@ -21,7 +21,8 @@ export default function DashboardLayout({
 
   const isWide =
     pathname === '/dashboard/my-booking' ||
-    pathname === '/dashboard/manage-doctors';
+    pathname === '/dashboard/manage-doctors' ||
+    pathname === '/dashboard/add-doctor';
 
   const tabs = [
     {

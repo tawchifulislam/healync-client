@@ -9,8 +9,8 @@ import { showSuccessToast, showErrorToast } from '@/lib/notification';
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 
-const DEMO_EMAIL = 'demo@healync.com';
-const DEMO_PASSWORD = 'Demo1234';
+const DEMO_EMAIL = 'user@gmail.com';
+const DEMO_PASSWORD = 'User1234';
 
 const LoginPage = (): React.ReactElement => {
   const [email, setEmail] = useState<string>('');
@@ -59,7 +59,6 @@ const LoginPage = (): React.ReactElement => {
           </h1>
         </div>
 
-        {/* Demo Credentials Button */}
         <button
           type="button"
           onClick={fillDemoCredentials}
